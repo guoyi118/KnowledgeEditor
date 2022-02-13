@@ -78,6 +78,7 @@ class BartSeq2SeqAugmented(LightningModule):
             embedding_dim=self.model.model.shared.weight.data.shape[1],
             hidden_dim=128,
             condition_dim=1024,
+            #include_set可能是控制有哪些层可以调整
             include_set={
                 n
                 for n, _ in self.model.named_parameters()
@@ -192,12 +193,13 @@ class BartSeq2SeqAugmented(LightningModule):
                 name: grad
                 for (name, _), grad in zip(self.model.named_parameters(), grads)
             }
-
+        # params_dict 是 {name of layer : shift of parameter}
         params_dict = self.learner(
             batch["cond_input_ids"],
             batch["cond_attention_mask"],
             grads=grads,
         )
+
 
         return logits_orig, params_dict
 
@@ -212,6 +214,7 @@ class BartSeq2SeqAugmented(LightningModule):
             decoder_input_ids=batch["trg_input_ids"][:, :-1],
             decoder_attention_mask=batch["trg_attention_mask"][:, :-1],
             use_cache=False,
+            # 这里的params 是调整过后的，因为 params_dict.get(n, 0) 是shift of paramete， p是 parameter
             params=[
                 params_dict.get(n, 0) + p for n, p in self.model.named_parameters()
             ],
@@ -220,19 +223,19 @@ class BartSeq2SeqAugmented(LightningModule):
         return logits_orig, logits, params_dict
 
     def get_kl_lp_cr(self, logits_orig, logits, labels, params_dict):
-
+        # kl应该是constraint里的KL divergence
         kl = torch.distributions.kl_divergence(
             torch.distributions.Categorical(logits=logits_orig),
             torch.distributions.Categorical(
                 logits=logits[: -2 if self.hparams.use_views else -1]
             ),
         )
-
+        # lp应该是 lp norm 
         lp = sum(
             (p.abs() ** self.hparams.p).mean() ** (1 / self.hparams.p)
             for p in params_dict.values()
         ) / len(params_dict)
-
+        # cr 不知道是什么
         cr, _ = label_smoothed_nll_loss(
             logits[-2 if self.hparams.use_views else -1 :].log_softmax(-1),
             labels[-2 if self.hparams.use_views else -1 :],

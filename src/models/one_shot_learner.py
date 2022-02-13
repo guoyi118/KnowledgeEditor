@@ -5,6 +5,7 @@ from higher.patch import monkeypatch as make_functional
 
 
 class ConditionedParameter(torch.nn.Module):
+    # 这里应该是5个FFNN的代码
     def __init__(self, parameter, condition_dim=1024, hidden_dim=128, max_scale=1):
         super().__init__()
         self.parameter_shape = parameter.shape
@@ -33,7 +34,7 @@ class ConditionedParameter(torch.nn.Module):
         self.max_scale = max_scale
 
     def forward(self, inputs, grad):
-
+        # 它这里写的跟论文里有出入，直接就是用一个 全链接层组成的module 暴力输出一个长vector， 然后再split成5个
         if len(self.parameter_shape) == 2:
             (
                 conditioner_cola,
@@ -61,7 +62,7 @@ class ConditionedParameter(torch.nn.Module):
             )
         else:
             raise RuntimeError()
-
+        # 这个是shift of parameter delta W
         return (
             self.max_scale
             * conditioner_norm.sigmoid().squeeze()
@@ -70,11 +71,13 @@ class ConditionedParameter(torch.nn.Module):
 
 
 class LSTMConditioner(torch.nn.Module):
+    # 这一部分应该是LSTM + FFNN
     def __init__(
         self,
         vocab_dim=30522,
         embedding_dim=768,
         hidden_dim=256,
+        #这里的hidden_dim也许是写错了，应该是128
         output_dim=1024,
         embedding_init=None,
     ):
@@ -118,7 +121,7 @@ class OneShotLearner(torch.nn.Module):
         embedding_init=None,
     ):
         super().__init__()
-
+        # {name: {name}_conditioner}
         self.param2conditioner_map = {
             n: "{}_conditioner".format(n).replace(".", "_")
             for n, p in model.named_parameters()
@@ -126,6 +129,7 @@ class OneShotLearner(torch.nn.Module):
         }
 
         self.conditioners = torch.nn.ModuleDict(
+            # {{name}_conditioner: 一个实例化的ConditionedParameter}
             {
                 self.param2conditioner_map[n]: ConditionedParameter(
                     p,
@@ -134,6 +138,7 @@ class OneShotLearner(torch.nn.Module):
                     max_scale=max_scale,
                 )
                 for n, p in model.named_parameters()
+                # include_set 说不定是可以控制的layer
                 if n in include_set
             }
         )
@@ -149,7 +154,9 @@ class OneShotLearner(torch.nn.Module):
     def forward(self, inputs, masks, grads=None):
         condition = self.condition(inputs, masks)
         return {
+            #{name: shift of parameter}
             p: self.conditioners[self.param2conditioner_map[p]](
+                # forward 时 LSTM的输出是ConditionedParameter的输入。
                 condition,
                 grad=grads[p] if grads else None,
             )

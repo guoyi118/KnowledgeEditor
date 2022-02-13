@@ -1,6 +1,6 @@
 #/bin/bash
-python scripts/train_bart_seq2seq_augmented_kilt.py \
-    --gpus 4 \
+python -m scripts.train_bart_seq2seq_augmented_kilt \
+    --gpus 1 \
     --accelerator ddp \
     --num_workers 32 \
     --batch_size 64 \

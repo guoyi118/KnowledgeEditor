@@ -24,10 +24,15 @@ class Seq2SeqAugmentedKILT(Dataset):
                             k: d[k]
                             for k in (
                                 "input",
+                                # 问题
                                 "prediction",
+                                # 模型输出（错误）
                                 "alternatives",
+                                #模型可能输出的其他答案
                                 "filtered_rephrases",
+                                # 与input有一样prediction的语言相似的问题
                                 "output",
+                                # 正确答案
                             )
                         }
                     )
