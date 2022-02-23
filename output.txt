@@ -1,0 +1,335 @@
+{'accelerator': 'ddp',
+ 'accumulate_grad_batches': 1,
+ 'amp_backend': 'native',
+ 'amp_level': 'O2',
+ 'auto_lr_find': False,
+ 'auto_scale_batch_size': False,
+ 'auto_select_gpus': False,
+ 'automatic_optimization': None,
+ 'batch_size': 32,
+ 'benchmark': False,
+ 'check_val_every_n_epoch': 1,
+ 'checkpoint_callback': True,
+ 'default_root_dir': None,
+ 'deterministic': False,
+ 'dev_data_path': '/root/sparqling-queries/data/break/logical-forms-fixed/dev_alter_v3.jsonl',
+ 'dirpath': 'models/T5_seq2seq_augmented_qdmr',
+ 'distributed_backend': None,
+ 'divergences': 'cr',
+ 'enable_pl_optimizer': None,
+ 'eps': 0.1,
+ 'fast_dev_run': False,
+ 'flush_logs_every_n_steps': 100,
+ 'gpus': 4,
+ 'gradient_clip_val': 0,
+ 'limit_predict_batches': 1.0,
+ 'limit_test_batches': 1.0,
+ 'limit_train_batches': 1.0,
+ 'limit_val_batches': 1.0,
+ 'log_every_n_steps': 50,
+ 'log_gpu_memory': None,
+ 'logger': True,
+ 'lr': 0.005,
+ 'lr_alpha': 0.05,
+ 'margin_kl_max': 0.001,
+ 'margin_kl_min': 1e-05,
+ 'margin_lp_max': 0.001,
+ 'margin_lp_min': 1e-07,
+ 'max_epochs': None,
+ 'max_length': 128,
+ 'max_scale': 1,
+ 'max_steps': 200000,
+ 'min_epochs': None,
+ 'min_steps': None,
+ 'model_checkpoint': '/root/KnowledgeEditor/models/T5_seq2seq/T5-checkpoint_v2.ckpt',
+ 'model_name': 't5-base',
+ 'move_metrics_to_cpu': False,
+ 'multiple_trainloader_mode': 'max_size_cycle',
+ 'num_nodes': 1,
+ 'num_processes': 1,
+ 'num_sanity_val_steps': 2,
+ 'num_workers': 32,
+ 'overfit_batches': 0.0,
+ 'p': 2,
+ 'plugins': None,
+ 'precision': 32,
+ 'prepare_data_per_node': True,
+ 'process_position': 0,
+ 'profiler': None,
+ 'progress_bar_refresh_rate': None,
+ 'reload_dataloaders_every_epoch': False,
+ 'replace_sampler_ddp': True,
+ 'resume_from_checkpoint': None,
+ 'save_top_k': 10,
+ 'seed': 42,
+ 'stochastic_weight_avg': False,
+ 'sync_batchnorm': False,
+ 'terminate_on_nan': False,
+ 'total_num_updates': 200000,
+ 'tpu_cores': <function _gpus_arg_default at 0x7f1311951710>,
+ 'track_grad_norm': -1,
+ 'train_data_path': '/root/sparqling-queries/data/break/logical-forms-fixed/train_alter_v3.jsonl',
+ 'truncated_bptt_steps': None,
+ 'use_views': False,
+ 'val_check_interval': 1.0,
+ 'warmup_updates': 1000,
+ 'weight_decay': 0.01,
+ 'weights_save_path': None,
+ 'weights_summary': 'top'}
+shared.weight
+encoder.block.0.layer.0.SelfAttention.q.weight
+encoder.block.0.layer.0.SelfAttention.k.weight
+encoder.block.0.layer.0.SelfAttention.v.weight
+encoder.block.0.layer.0.SelfAttention.o.weight
+encoder.block.0.layer.0.SelfAttention.relative_attention_bias.weight
+encoder.block.0.layer.0.layer_norm.weight
+encoder.block.0.layer.1.DenseReluDense.wi.weight
+encoder.block.0.layer.1.DenseReluDense.wo.weight
+encoder.block.0.layer.1.layer_norm.weight
+encoder.block.1.layer.0.SelfAttention.q.weight
+encoder.block.1.layer.0.SelfAttention.k.weight
+encoder.block.1.layer.0.SelfAttention.v.weight
+encoder.block.1.layer.0.SelfAttention.o.weight
+encoder.block.1.layer.0.layer_norm.weight
+encoder.block.1.layer.1.DenseReluDense.wi.weight
+encoder.block.1.layer.1.DenseReluDense.wo.weight
+encoder.block.1.layer.1.layer_norm.weight
+encoder.block.2.layer.0.SelfAttention.q.weight
+encoder.block.2.layer.0.SelfAttention.k.weight
+encoder.block.2.layer.0.SelfAttention.v.weight
+encoder.block.2.layer.0.SelfAttention.o.weight
+encoder.block.2.layer.0.layer_norm.weight
+encoder.block.2.layer.1.DenseReluDense.wi.weight
+encoder.block.2.layer.1.DenseReluDense.wo.weight
+encoder.block.2.layer.1.layer_norm.weight
+encoder.block.3.layer.0.SelfAttention.q.weight
+encoder.block.3.layer.0.SelfAttention.k.weight
+encoder.block.3.layer.0.SelfAttention.v.weight
+encoder.block.3.layer.0.SelfAttention.o.weight
+encoder.block.3.layer.0.layer_norm.weight
+encoder.block.3.layer.1.DenseReluDense.wi.weight
+encoder.block.3.layer.1.DenseReluDense.wo.weight
+encoder.block.3.layer.1.layer_norm.weight
+encoder.block.4.layer.0.SelfAttention.q.weight
+encoder.block.4.layer.0.SelfAttention.k.weight
+encoder.block.4.layer.0.SelfAttention.v.weight
+encoder.block.4.layer.0.SelfAttention.o.weight
+encoder.block.4.layer.0.layer_norm.weight
+encoder.block.4.layer.1.DenseReluDense.wi.weight
+encoder.block.4.layer.1.DenseReluDense.wo.weight
+encoder.block.4.layer.1.layer_norm.weight
+encoder.block.5.layer.0.SelfAttention.q.weight
+encoder.block.5.layer.0.SelfAttention.k.weight
+encoder.block.5.layer.0.SelfAttention.v.weight
+encoder.block.5.layer.0.SelfAttention.o.weight
+encoder.block.5.layer.0.layer_norm.weight
+encoder.block.5.layer.1.DenseReluDense.wi.weight
+encoder.block.5.layer.1.DenseReluDense.wo.weight
+encoder.block.5.layer.1.layer_norm.weight
+encoder.block.6.layer.0.SelfAttention.q.weight
+encoder.block.6.layer.0.SelfAttention.k.weight
+encoder.block.6.layer.0.SelfAttention.v.weight
+encoder.block.6.layer.0.SelfAttention.o.weight
+encoder.block.6.layer.0.layer_norm.weight
+encoder.block.6.layer.1.DenseReluDense.wi.weight
+encoder.block.6.layer.1.DenseReluDense.wo.weight
+encoder.block.6.layer.1.layer_norm.weight
+encoder.block.7.layer.0.SelfAttention.q.weight
+encoder.block.7.layer.0.SelfAttention.k.weight
+encoder.block.7.layer.0.SelfAttention.v.weight
+encoder.block.7.layer.0.SelfAttention.o.weight
+encoder.block.7.layer.0.layer_norm.weight
+encoder.block.7.layer.1.DenseReluDense.wi.weight
+encoder.block.7.layer.1.DenseReluDense.wo.weight
+encoder.block.7.layer.1.layer_norm.weight
+encoder.block.8.layer.0.SelfAttention.q.weight
+encoder.block.8.layer.0.SelfAttention.k.weight
+encoder.block.8.layer.0.SelfAttention.v.weight
+encoder.block.8.layer.0.SelfAttention.o.weight
+encoder.block.8.layer.0.layer_norm.weight
+encoder.block.8.layer.1.DenseReluDense.wi.weight
+encoder.block.8.layer.1.DenseReluDense.wo.weight
+encoder.block.8.layer.1.layer_norm.weight
+encoder.block.9.layer.0.SelfAttention.q.weight
+encoder.block.9.layer.0.SelfAttention.k.weight
+encoder.block.9.layer.0.SelfAttention.v.weight
+encoder.block.9.layer.0.SelfAttention.o.weight
+encoder.block.9.layer.0.layer_norm.weight
+encoder.block.9.layer.1.DenseReluDense.wi.weight
+encoder.block.9.layer.1.DenseReluDense.wo.weight
+encoder.block.9.layer.1.layer_norm.weight
+encoder.block.10.layer.0.SelfAttention.q.weight
+encoder.block.10.layer.0.SelfAttention.k.weight
+encoder.block.10.layer.0.SelfAttention.v.weight
+encoder.block.10.layer.0.SelfAttention.o.weight
+encoder.block.10.layer.0.layer_norm.weight
+encoder.block.10.layer.1.DenseReluDense.wi.weight
+encoder.block.10.layer.1.DenseReluDense.wo.weight
+encoder.block.10.layer.1.layer_norm.weight
+encoder.block.11.layer.0.SelfAttention.q.weight
+encoder.block.11.layer.0.SelfAttention.k.weight
+encoder.block.11.layer.0.SelfAttention.v.weight
+encoder.block.11.layer.0.SelfAttention.o.weight
+encoder.block.11.layer.0.layer_norm.weight
+encoder.block.11.layer.1.DenseReluDense.wi.weight
+encoder.block.11.layer.1.DenseReluDense.wo.weight
+encoder.block.11.layer.1.layer_norm.weight
+encoder.final_layer_norm.weight
+decoder.block.0.layer.0.SelfAttention.q.weight
+decoder.block.0.layer.0.SelfAttention.k.weight
+decoder.block.0.layer.0.SelfAttention.v.weight
+decoder.block.0.layer.0.SelfAttention.o.weight
+decoder.block.0.layer.0.SelfAttention.relative_attention_bias.weight
+decoder.block.0.layer.0.layer_norm.weight
+decoder.block.0.layer.1.EncDecAttention.q.weight
+decoder.block.0.layer.1.EncDecAttention.k.weight
+decoder.block.0.layer.1.EncDecAttention.v.weight
+decoder.block.0.layer.1.EncDecAttention.o.weight
+decoder.block.0.layer.1.layer_norm.weight
+decoder.block.0.layer.2.DenseReluDense.wi.weight
+decoder.block.0.layer.2.DenseReluDense.wo.weight
+decoder.block.0.layer.2.layer_norm.weight
+decoder.block.1.layer.0.SelfAttention.q.weight
+decoder.block.1.layer.0.SelfAttention.k.weight
+decoder.block.1.layer.0.SelfAttention.v.weight
+decoder.block.1.layer.0.SelfAttention.o.weight
+decoder.block.1.layer.0.layer_norm.weight
+decoder.block.1.layer.1.EncDecAttention.q.weight
+decoder.block.1.layer.1.EncDecAttention.k.weight
+decoder.block.1.layer.1.EncDecAttention.v.weight
+decoder.block.1.layer.1.EncDecAttention.o.weight
+decoder.block.1.layer.1.layer_norm.weight
+decoder.block.1.layer.2.DenseReluDense.wi.weight
+decoder.block.1.layer.2.DenseReluDense.wo.weight
+decoder.block.1.layer.2.layer_norm.weight
+decoder.block.2.layer.0.SelfAttention.q.weight
+decoder.block.2.layer.0.SelfAttention.k.weight
+decoder.block.2.layer.0.SelfAttention.v.weight
+decoder.block.2.layer.0.SelfAttention.o.weight
+decoder.block.2.layer.0.layer_norm.weight
+decoder.block.2.layer.1.EncDecAttention.q.weight
+decoder.block.2.layer.1.EncDecAttention.k.weight
+decoder.block.2.layer.1.EncDecAttention.v.weight
+decoder.block.2.layer.1.EncDecAttention.o.weight
+decoder.block.2.layer.1.layer_norm.weight
+decoder.block.2.layer.2.DenseReluDense.wi.weight
+decoder.block.2.layer.2.DenseReluDense.wo.weight
+decoder.block.2.layer.2.layer_norm.weight
+decoder.block.3.layer.0.SelfAttention.q.weight
+decoder.block.3.layer.0.SelfAttention.k.weight
+decoder.block.3.layer.0.SelfAttention.v.weight
+decoder.block.3.layer.0.SelfAttention.o.weight
+decoder.block.3.layer.0.layer_norm.weight
+decoder.block.3.layer.1.EncDecAttention.q.weight
+decoder.block.3.layer.1.EncDecAttention.k.weight
+decoder.block.3.layer.1.EncDecAttention.v.weight
+decoder.block.3.layer.1.EncDecAttention.o.weight
+decoder.block.3.layer.1.layer_norm.weight
+decoder.block.3.layer.2.DenseReluDense.wi.weight
+decoder.block.3.layer.2.DenseReluDense.wo.weight
+decoder.block.3.layer.2.layer_norm.weight
+decoder.block.4.layer.0.SelfAttention.q.weight
+decoder.block.4.layer.0.SelfAttention.k.weight
+decoder.block.4.layer.0.SelfAttention.v.weight
+decoder.block.4.layer.0.SelfAttention.o.weight
+decoder.block.4.layer.0.layer_norm.weight
+decoder.block.4.layer.1.EncDecAttention.q.weight
+decoder.block.4.layer.1.EncDecAttention.k.weight
+decoder.block.4.layer.1.EncDecAttention.v.weight
+decoder.block.4.layer.1.EncDecAttention.o.weight
+decoder.block.4.layer.1.layer_norm.weight
+decoder.block.4.layer.2.DenseReluDense.wi.weight
+decoder.block.4.layer.2.DenseReluDense.wo.weight
+decoder.block.4.layer.2.layer_norm.weight
+decoder.block.5.layer.0.SelfAttention.q.weight
+decoder.block.5.layer.0.SelfAttention.k.weight
+decoder.block.5.layer.0.SelfAttention.v.weight
+decoder.block.5.layer.0.SelfAttention.o.weight
+decoder.block.5.layer.0.layer_norm.weight
+decoder.block.5.layer.1.EncDecAttention.q.weight
+decoder.block.5.layer.1.EncDecAttention.k.weight
+decoder.block.5.layer.1.EncDecAttention.v.weight
+decoder.block.5.layer.1.EncDecAttention.o.weight
+decoder.block.5.layer.1.layer_norm.weight
+decoder.block.5.layer.2.DenseReluDense.wi.weight
+decoder.block.5.layer.2.DenseReluDense.wo.weight
+decoder.block.5.layer.2.layer_norm.weight
+decoder.block.6.layer.0.SelfAttention.q.weight
+decoder.block.6.layer.0.SelfAttention.k.weight
+decoder.block.6.layer.0.SelfAttention.v.weight
+decoder.block.6.layer.0.SelfAttention.o.weight
+decoder.block.6.layer.0.layer_norm.weight
+decoder.block.6.layer.1.EncDecAttention.q.weight
+decoder.block.6.layer.1.EncDecAttention.k.weight
+decoder.block.6.layer.1.EncDecAttention.v.weight
+decoder.block.6.layer.1.EncDecAttention.o.weight
+decoder.block.6.layer.1.layer_norm.weight
+decoder.block.6.layer.2.DenseReluDense.wi.weight
+decoder.block.6.layer.2.DenseReluDense.wo.weight
+decoder.block.6.layer.2.layer_norm.weight
+decoder.block.7.layer.0.SelfAttention.q.weight
+decoder.block.7.layer.0.SelfAttention.k.weight
+decoder.block.7.layer.0.SelfAttention.v.weight
+decoder.block.7.layer.0.SelfAttention.o.weight
+decoder.block.7.layer.0.layer_norm.weight
+decoder.block.7.layer.1.EncDecAttention.q.weight
+decoder.block.7.layer.1.EncDecAttention.k.weight
+decoder.block.7.layer.1.EncDecAttention.v.weight
+decoder.block.7.layer.1.EncDecAttention.o.weight
+decoder.block.7.layer.1.layer_norm.weight
+decoder.block.7.layer.2.DenseReluDense.wi.weight
+decoder.block.7.layer.2.DenseReluDense.wo.weight
+decoder.block.7.layer.2.layer_norm.weight
+decoder.block.8.layer.0.SelfAttention.q.weight
+decoder.block.8.layer.0.SelfAttention.k.weight
+decoder.block.8.layer.0.SelfAttention.v.weight
+decoder.block.8.layer.0.SelfAttention.o.weight
+decoder.block.8.layer.0.layer_norm.weight
+decoder.block.8.layer.1.EncDecAttention.q.weight
+decoder.block.8.layer.1.EncDecAttention.k.weight
+decoder.block.8.layer.1.EncDecAttention.v.weight
+decoder.block.8.layer.1.EncDecAttention.o.weight
+decoder.block.8.layer.1.layer_norm.weight
+decoder.block.8.layer.2.DenseReluDense.wi.weight
+decoder.block.8.layer.2.DenseReluDense.wo.weight
+decoder.block.8.layer.2.layer_norm.weight
+decoder.block.9.layer.0.SelfAttention.q.weight
+decoder.block.9.layer.0.SelfAttention.k.weight
+decoder.block.9.layer.0.SelfAttention.v.weight
+decoder.block.9.layer.0.SelfAttention.o.weight
+decoder.block.9.layer.0.layer_norm.weight
+decoder.block.9.layer.1.EncDecAttention.q.weight
+decoder.block.9.layer.1.EncDecAttention.k.weight
+decoder.block.9.layer.1.EncDecAttention.v.weight
+decoder.block.9.layer.1.EncDecAttention.o.weight
+decoder.block.9.layer.1.layer_norm.weight
+decoder.block.9.layer.2.DenseReluDense.wi.weight
+decoder.block.9.layer.2.DenseReluDense.wo.weight
+decoder.block.9.layer.2.layer_norm.weight
+decoder.block.10.layer.0.SelfAttention.q.weight
+decoder.block.10.layer.0.SelfAttention.k.weight
+decoder.block.10.layer.0.SelfAttention.v.weight
+decoder.block.10.layer.0.SelfAttention.o.weight
+decoder.block.10.layer.0.layer_norm.weight
+decoder.block.10.layer.1.EncDecAttention.q.weight
+decoder.block.10.layer.1.EncDecAttention.k.weight
+decoder.block.10.layer.1.EncDecAttention.v.weight
+decoder.block.10.layer.1.EncDecAttention.o.weight
+decoder.block.10.layer.1.layer_norm.weight
+decoder.block.10.layer.2.DenseReluDense.wi.weight
+decoder.block.10.layer.2.DenseReluDense.wo.weight
+decoder.block.10.layer.2.layer_norm.weight
+decoder.block.11.layer.0.SelfAttention.q.weight
+decoder.block.11.layer.0.SelfAttention.k.weight
+decoder.block.11.layer.0.SelfAttention.v.weight
+decoder.block.11.layer.0.SelfAttention.o.weight
+decoder.block.11.layer.0.layer_norm.weight
+decoder.block.11.layer.1.EncDecAttention.q.weight
+decoder.block.11.layer.1.EncDecAttention.k.weight
+decoder.block.11.layer.1.EncDecAttention.v.weight
+decoder.block.11.layer.1.EncDecAttention.o.weight
+decoder.block.11.layer.1.layer_norm.weight
+decoder.block.11.layer.2.DenseReluDense.wi.weight
+decoder.block.11.layer.2.DenseReluDense.wo.weight
+decoder.block.11.layer.2.layer_norm.weight
+decoder.final_layer_norm.weight

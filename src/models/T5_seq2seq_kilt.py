@@ -5,16 +5,16 @@ import torch
 from pytorch_lightning import LightningModule
 from torch.utils.data import DataLoader
 from transformers import (
-    BartForConditionalGeneration,
-    BartTokenizer,
+    T5ForConditionalGeneration,
+    T5Tokenizer,
     get_linear_schedule_with_warmup,
 )
-import jsonlines
+
 from src.data.seq2seq_kilt import Seq2SeqKILT
 from src.utils import label_smoothed_nll_loss, batch_it
+import jsonlines
 
-
-class BartSeq2Seq(LightningModule):
+class T5Seq2Seq(LightningModule):
     @staticmethod
     def add_model_specific_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
@@ -30,22 +30,22 @@ class BartSeq2Seq(LightningModule):
         )
         parser.add_argument("--batch_size", type=int, default=48)
         parser.add_argument("--lr", type=float, default=3e-5)
-        parser.add_argument("--max_length", type=int, default=32)
+        parser.add_argument("--max_length", type=int, default=256)
         parser.add_argument("--weight_decay", type=int, default=0.01)
         parser.add_argument("--total_num_updates", type=int, default=50000)
         parser.add_argument("--warmup_updates", type=int, default=500)
         parser.add_argument("--num_workers", type=int, default=0)
 
-        parser.add_argument("--model_name", type=str, default="facebook/bart-base")
+        parser.add_argument("--model_name", type=str, default="t5-base")
         parser.add_argument("--eps", type=float, default=0.1)
         return parser
 
     def __init__(self, *args, **kwargs):
         super().__init__()
         self.save_hyperparameters()
-        self.tokenizer = BartTokenizer.from_pretrained(self.hparams.model_name)
-        self.model = BartForConditionalGeneration.from_pretrained(
-            self.hparams.model_name
+        self.tokenizer = T5Tokenizer.from_pretrained('/root/sparqling-queries/data/break/logical-forms-fixed/outputs/simplet5-epoch-7-train-loss-0.1483-val-loss-0.1631')
+        self.model = T5ForConditionalGeneration.from_pretrained(
+            '/root/sparqling-queries/data/break/logical-forms-fixed/outputs/simplet5-epoch-7-train-loss-0.1483-val-loss-0.1631'
         )
 
         self.train_acc = pl.metrics.Accuracy()
@@ -84,33 +84,42 @@ class BartSeq2Seq(LightningModule):
         )
 
     def forward(self, batch):
-        return self.model(
+        labels = batch["trg_input_ids"]
+        labels[
+            labels == 0
+        ] = -100  # to make sure we have correct labels for T5 text generation
+
+        output = self.model(
             input_ids=batch["src_input_ids"],
             attention_mask=batch["src_attention_mask"],
-            decoder_input_ids=batch["trg_input_ids"][:, :-1],
-            decoder_attention_mask=batch["trg_attention_mask"][:, :-1],
-            use_cache=False,
-        ).logits
+            labels=labels,
+            decoder_attention_mask=batch["trg_attention_mask"]
+        )
+        return output.loss
 
     def training_step(self, batch, batch_idx=None):
-        logits = self.forward(batch)
+        loss = self.forward(batch)
 
-        loss, nll_loss = label_smoothed_nll_loss(
-            logits.log_softmax(-1),
-            batch["trg_input_ids"][:, 1:],
-            epsilon=self.hparams.eps,
-            ignore_index=self.tokenizer.pad_token_id,
-        )
+        # loss, nll_loss = label_smoothed_nll_loss(
+        #     logits.log_softmax(-1),
+        #     batch["trg_input_ids"][:, 1:],
+        #     epsilon=self.hparams.eps,
+        #     ignore_index=self.tokenizer.pad_token_id,
+        # )
 
-        ntokens = batch["trg_attention_mask"][:, 1:].sum()
-        loss, nll_loss = loss / ntokens, nll_loss / ntokens
+        # ntokens = batch["trg_attention_mask"][:, 1:].sum()
+        # loss, nll_loss = loss / ntokens, nll_loss / ntokens
 
-        self.log("nll_loss", nll_loss, on_step=True, on_epoch=False, prog_bar=True)
+        self.log("training_loss", loss, on_step=True, on_epoch=False, prog_bar=True)
 
         return {"loss": loss}
 
     def validation_step(self, batch, batch_idx=None):
+        if self.global_step == 0:
+            self.trainer.save_checkpoint('/root/KnowledgeEditor/models/T5_seq2seq/T5-checkpoint_v2.ckpt')
+            
         gold = [b["trg"] for b in batch["raw"]]
+        
         guess = self.tokenizer.batch_decode(
             self.model.generate(
                 input_ids=batch["src_input_ids"],
@@ -121,6 +130,7 @@ class BartSeq2Seq(LightningModule):
             ),
             skip_special_tokens=True,
         )
+
 
         acc = torch.tensor(
             [
@@ -135,10 +145,10 @@ class BartSeq2Seq(LightningModule):
 
         return {'batch': batch["raw"], "guess": guess}
 
-
     def validation_epoch_end(self, validation_step_outputs):
         with jsonlines.open('/root/KnowledgeEditor/result.jsonl', "a") as f:
             f.write_all([validation_step_outputs])
+
 
 
     def sample(self, sentences, num_return_sequences=1):
@@ -153,7 +163,7 @@ class BartSeq2Seq(LightningModule):
                                 for k, v in self.tokenizer(
                                     sentences,
                                     return_tensors="pt",
-                                    padding=True,
+                                    padding='max_length',
                                     max_length=self.hparams.max_length,
                                     truncation=True,
                                 ).items()

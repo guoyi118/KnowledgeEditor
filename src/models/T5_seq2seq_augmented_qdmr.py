@@ -8,47 +8,47 @@ from higher.patch import monkeypatch as make_functional
 from pytorch_lightning import LightningModule
 from torch.utils.data import DataLoader
 from transformers import (
-    BartForConditionalGeneration,
-    BartTokenizer,
+    T5ForConditionalGeneration,
+    T5Tokenizer,
     get_constant_schedule,
     get_linear_schedule_with_warmup,    
 )
 
 from src.data.seq2seq_augmented_kilt import Seq2SeqAugmentedKILT
-from src.models.bart_seq2seq_kilt import BartSeq2Seq
+from src.models.T5_seq2seq_kilt import T5Seq2Seq
 from src.models.one_shot_learner import OneShotLearner
 from src.utils import batch_it, label_smoothed_nll_loss
 
 
-class BartSeq2SeqAugmented(LightningModule):
+class T5Seq2SeqAugmented(LightningModule):
     @staticmethod
     def add_model_specific_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
         parser.add_argument(
             "--train_data_path",
             type=str,
-            default="/root/sparqling-queries/data/break/logical-forms-fixed/train_alter.jsonl",
+            default="/root/sparqling-queries/data/break/logical-forms-fixed/train_alter_v3.jsonl",
         )
         parser.add_argument(
             "--dev_data_path",
             type=str,
-            default="/root/sparqling-queries/data/break/logical-forms-fixed/dev_alter.jsonl",
+            default="/root/sparqling-queries/data/break/logical-forms-fixed/dev_alter_v3.jsonl",
         )
         parser.add_argument("--batch_size", type=int, default=64)
         parser.add_argument("--lr", type=float, default=3e-4)
-        parser.add_argument("--lr_alpha", type=float, default=1e-1)
-        parser.add_argument("--max_length", type=int, default=32)
+        parser.add_argument("--lr_alpha", type=float, default=5e-2)
+        parser.add_argument("--max_length", type=int, default=256)
         parser.add_argument("--weight_decay", type=int, default=0.01)
         parser.add_argument("--total_num_updates", type=int, default=200000)
         parser.add_argument("--warmup_updates", type=int, default=1000)
         parser.add_argument("--num_workers", type=int, default=0)
 
-        parser.add_argument("--model_name", type=str, default="facebook/bart-base")
+        parser.add_argument("--model_name", type=str, default="t5-base")
         parser.add_argument("--eps", type=float, default=0.1)
         parser.add_argument(
             "--model_checkpoint",
             type=str,
-            default="/root/KnowledgeEditor/models/bart_seq2seq_structured_zeroshot/version_2/checkpoints/model-epoch=04-valid_acc=0.0000.ckpt",
+            default="/root/KnowledgeEditor/models/T5_seq2seq/T5-checkpoint_v2.ckpt",
         )
 
         parser.add_argument("--margin_kl_max", type=float, default=1e-3)
@@ -58,7 +58,7 @@ class BartSeq2SeqAugmented(LightningModule):
         parser.add_argument("--max_scale", type=float, default=1)
         parser.add_argument("--p", type=float, default=2)
         parser.add_argument(
-            "--divergences", type=str, choices=["kl", "lp", "both"], default="kl"
+            "--divergences", type=str, choices=["kl", "lp", "both", "cr"], default="kl"
         )
         parser.add_argument("--use_views", action="store_true")
 
@@ -67,39 +67,36 @@ class BartSeq2SeqAugmented(LightningModule):
     def __init__(self, *args, **kwargs):
         super().__init__()
         self.save_hyperparameters()
-        self.tokenizer = BartTokenizer.from_pretrained(self.hparams.model_name)
-        self.model = BartSeq2Seq.load_from_checkpoint(
+        self.tokenizer = T5Tokenizer.from_pretrained(self.hparams.model_name)
+        self.model = T5Seq2Seq.load_from_checkpoint(
             self.hparams.model_checkpoint
         ).model.eval()
 
+        for n, _ in self.model.named_parameters():
+            print(n)
+
         self.learner = OneShotLearner(
             self.model,
-            vocab_dim=self.model.model.shared.weight.data.shape[0],
-            embedding_dim=self.model.model.shared.weight.data.shape[1],
-            hidden_dim=128,
+            vocab_dim=self.model.shared.weight.data.shape[0],
+            embedding_dim=self.model.shared.weight.data.shape[1],
+            hidden_dim=256,
             condition_dim=1024,
             #include_set可能是控制有哪些层可以调整
             include_set={
                 n
                 for n, _ in self.model.named_parameters()
-                if all(
-                    e not in n.lower()
+                if any(
+                    e in n
                     for e in (
-                        "bias",
-                        "norm",
-                        "embeddings",
-                        "classifier",
-                        "pooler",
-                        "shared",
-                        "embed",
-                        "positions",
+                        "SelfAttention",
+                        "EncDecAttention"
                     )
                 )
             },
             max_scale=self.hparams.max_scale,
-            embedding_init=self.model.model.shared.weight.data,
+            embedding_init=self.model.shared.weight.data,
         )
-
+        
         self.alpha_kl = torch.nn.Parameter(torch.ones(()))
         self.alpha_kl.register_hook(lambda grad: -grad)
 
@@ -200,14 +197,12 @@ class BartSeq2SeqAugmented(LightningModule):
             grads=grads,
         )
 
-
         return logits_orig, params_dict
 
     def forward(self, batch):
 
         logits_orig, params_dict = self.get_logits_orig_params_dict(batch)
         fmodel = make_functional(self.model).eval()
-
         logits = fmodel(
             input_ids=batch["src_input_ids"],
             attention_mask=batch["src_attention_mask"],
@@ -236,6 +231,7 @@ class BartSeq2SeqAugmented(LightningModule):
             for p in params_dict.values()
         ) / len(params_dict)
         # cr 不知道是什么
+
         cr, _ = label_smoothed_nll_loss(
             logits[-2 if self.hparams.use_views else -1 :].log_softmax(-1),
             labels[-2 if self.hparams.use_views else -1 :],
@@ -276,6 +272,8 @@ class BartSeq2SeqAugmented(LightningModule):
             loss = cr + loss_kl
         elif self.hparams.divergences == "lp":
             loss = cr + loss_lp
+        elif self.hparams.divergences == "cr":
+            loss = cr
 
         self.log("alpha_kl", self.alpha_kl, on_step=True, on_epoch=False, prog_bar=True)
         self.log("alpha_lp", self.alpha_lp, on_step=True, on_epoch=False, prog_bar=True)
@@ -294,25 +292,33 @@ class BartSeq2SeqAugmented(LightningModule):
         gold = [b["pred"] for b in batch["raw"][:-1]] + [batch["raw"][-1]["alt"]] * (
             2 if self.hparams.use_views else 1
         )
-
-        guess = self.tokenizer.batch_decode(
-            fmodel.generate(
+        
+        outputs = fmodel.generate(
                 input_ids=batch["src_input_ids"],
                 attention_mask=batch["src_attention_mask"],
+                max_length=self.hparams.max_length,
                 min_length=0,
                 num_beams=5,
-                num_return_sequences=1,
+                num_return_sequences=2,
                 params=[
                     params_dict.get(n, 0) + p for n, p in self.model.named_parameters()
                 ],
-            ),
+            )
+
+        guess = self.tokenizer.batch_decode(
+            outputs,
             skip_special_tokens=True,
         )
 
+
         acc = torch.tensor(
-            [a.lower().strip() == b.lower().strip() for a, b in zip(guess, gold)]
+            [b in guess for b in gold]
         ).long()
-        self.valid_acc(acc, torch.ones_like(acc))
+        
+        self.valid_acc(
+            acc[:(-2 if self.hparams.use_views else -1)],
+            torch.ones_like(acc[:(-2 if self.hparams.use_views else -1)]))
+
         self.log(
             "valid_acc", self.valid_acc, on_step=False, on_epoch=True, prog_bar=True
         )

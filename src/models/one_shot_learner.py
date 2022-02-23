@@ -9,7 +9,7 @@ class ConditionedParameter(torch.nn.Module):
     def __init__(self, parameter, condition_dim=1024, hidden_dim=128, max_scale=1):
         super().__init__()
         self.parameter_shape = parameter.shape
-
+        
         if len(self.parameter_shape) == 2:
             self.conditioners = torch.nn.Sequential(
                 torch.nn.utils.weight_norm(torch.nn.Linear(condition_dim, hidden_dim)),
@@ -63,11 +63,12 @@ class ConditionedParameter(torch.nn.Module):
         else:
             raise RuntimeError()
         # 这个是shift of parameter delta W
-        return (
-            self.max_scale
+        output = (self.max_scale
             * conditioner_norm.sigmoid().squeeze()
-            * (grad * a.squeeze() + b.squeeze())
-        )
+            * (grad * a.squeeze() + b.squeeze()))
+
+
+        return output
 
 
 class LSTMConditioner(torch.nn.Module):
@@ -81,31 +82,62 @@ class LSTMConditioner(torch.nn.Module):
         output_dim=1024,
         embedding_init=None,
     ):
+        
         super().__init__()
+
         self.embedding = torch.nn.Embedding(
             num_embeddings=vocab_dim,
             embedding_dim=embedding_dim,
             padding_idx=0,
             _weight=embedding_init,
         )
+
         self.lstm = PytorchSeq2VecWrapper(
             torch.nn.LSTM(
                 input_size=embedding_dim,
                 hidden_size=hidden_dim,
-                num_layers=1,
+                num_layers=2,
                 bidirectional=True,
                 batch_first=True,
             )
         )
+        
+        self.transformer = torch.nn.TransformerEncoder(
+                torch.nn.TransformerEncoderLayer(
+                    d_model=embedding_dim, 
+                    nhead=8, 
+                    dim_feedforward=output_dim,
+                    batch_first=True),
+                num_layers=3
+            )
+            
+
+        # 开始调整性能，调整层数，激活函数，以及参数范围
         self.linear = FeedForward(
             input_dim=hidden_dim * 2,
             num_layers=1,
             hidden_dims=[output_dim],
-            activations=[torch.nn.Tanh()],
+            activations=[torch.nn.LeakyReLU()],
         )
 
     def forward(self, inputs, masks):
-        return self.linear(self.lstm(self.embedding(inputs), masks))
+        # print(self.embedding(inputs).shape)
+        # print(masks.type(torch.float64))
+        lstm_output = self.lstm(self.embedding(inputs), masks)
+        # transformer_output = self.transformer(self.embedding(inputs))
+        # print('~~~~~~self.embedding(inputs)~~~~~~~~~~')
+        # print(self.embedding(inputs).shape)
+        # print('~~~~~~~transformer~~~~~~')
+        # print(transformer_output.shape)
+        # print('~~~~~~lstm_output~~~~')
+        # print(lstm_output.shape)
+
+
+ 
+        output = self.linear(lstm_output)
+
+            
+        return output
 
 
 class OneShotLearner(torch.nn.Module):
@@ -127,7 +159,6 @@ class OneShotLearner(torch.nn.Module):
             for n, p in model.named_parameters()
             if n in include_set
         }
-
         self.conditioners = torch.nn.ModuleDict(
             # {{name}_conditioner: 一个实例化的ConditionedParameter}
             {
@@ -153,6 +184,7 @@ class OneShotLearner(torch.nn.Module):
 
     def forward(self, inputs, masks, grads=None):
         condition = self.condition(inputs, masks)
+
         return {
             #{name: shift of parameter}
             p: self.conditioners[self.param2conditioner_map[p]](

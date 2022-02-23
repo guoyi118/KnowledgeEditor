@@ -6,6 +6,8 @@ from pytorch_lightning import LightningModule, Trainer
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.utilities.seed import seed_everything
+import sys
+sys.path.append('/root/KnowledgeEditor')
 
 from src.models.bart_seq2seq_augmented_kilt import BartSeq2SeqAugmented
 
@@ -43,7 +45,7 @@ if __name__ == "__main__":
         ),
     ]
 
-    trainer = Trainer.from_argparse_args(args, logger=logger, callbacks=callbacks)
+    trainer = Trainer.from_argparse_args(args, logger=logger, callbacks=callbacks, , resume_from_checkpoint='/root/sparqling-queries/data/break/logical-forms-fixed/lightning_logs/version_4/checkpoints/epoch=4-step=3449.ckpt')
 
     model = BartSeq2SeqAugmented(**vars(args))
 

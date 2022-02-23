@@ -1,0 +1,91 @@
+{'accelerator': 'ddp',
+ 'accumulate_grad_batches': 1,
+ 'amp_backend': 'native',
+ 'amp_level': 'O2',
+ 'auto_lr_find': False,
+ 'auto_scale_batch_size': False,
+ 'auto_select_gpus': False,
+ 'automatic_optimization': None,
+ 'batch_size': 2,
+ 'benchmark': False,
+ 'check_val_every_n_epoch': 1,
+ 'checkpoint_callback': True,
+ 'default_root_dir': None,
+ 'deterministic': False,
+ 'dev_data_path': '/root/sparqling-queries/data/break/logical-forms-fixed/dev_alter.jsonl',
+ 'dirpath': 'models/T5_seq2seq_augmented_qdmr',
+ 'distributed_backend': None,
+ 'divergences': 'both',
+ 'enable_pl_optimizer': None,
+ 'eps': 0.1,
+ 'fast_dev_run': False,
+ 'flush_logs_every_n_steps': 100,
+ 'gpus': 1,
+ 'gradient_clip_val': 0,
+ 'limit_predict_batches': 1.0,
+ 'limit_test_batches': 1.0,
+ 'limit_train_batches': 1.0,
+ 'limit_val_batches': 1.0,
+ 'log_every_n_steps': 50,
+ 'log_gpu_memory': None,
+ 'logger': True,
+ 'lr': 0.0003,
+ 'lr_alpha': 0.05,
+ 'margin_kl_max': 0.001,
+ 'margin_kl_min': 1e-05,
+ 'margin_lp_max': 0.001,
+ 'margin_lp_min': 1e-07,
+ 'max_epochs': None,
+ 'max_length': 256,
+ 'max_scale': 1,
+ 'max_steps': 200000,
+ 'min_epochs': None,
+ 'min_steps': None,
+ 'model_checkpoint': '/root/KnowledgeEditor/models/T5_seq2seq/T5-checkpoint.ckpt',
+ 'model_name': 't5-base',
+ 'move_metrics_to_cpu': False,
+ 'multiple_trainloader_mode': 'max_size_cycle',
+ 'num_nodes': 1,
+ 'num_processes': 1,
+ 'num_sanity_val_steps': 2,
+ 'num_workers': 32,
+ 'overfit_batches': 0.0,
+ 'p': 2,
+ 'plugins': None,
+ 'precision': 32,
+ 'prepare_data_per_node': True,
+ 'process_position': 0,
+ 'profiler': None,
+ 'progress_bar_refresh_rate': None,
+ 'reload_dataloaders_every_epoch': False,
+ 'replace_sampler_ddp': True,
+ 'resume_from_checkpoint': None,
+ 'save_top_k': 10,
+ 'seed': 0,
+ 'stochastic_weight_avg': False,
+ 'sync_batchnorm': False,
+ 'terminate_on_nan': False,
+ 'total_num_updates': 200000,
+ 'tpu_cores': <function _gpus_arg_default at 0x7faad08c7710>,
+ 'track_grad_norm': -1,
+ 'train_data_path': '/root/sparqling-queries/data/break/logical-forms-fixed/train_alter.jsonl',
+ 'truncated_bptt_steps': None,
+ 'use_views': False,
+ 'val_check_interval': 1.0,
+ 'warmup_updates': 1000,
+ 'weight_decay': 0.01,
+ 'weights_save_path': None,
+ 'weights_summary': 'top'}
+Validation sanity check: 0it [00:00, ?it/s]Validation sanity check:   0%|          | 0/2 [00:00<?, ?it/s]~~~~~source~~~~~~~~~
+['what flights are available tomorrow from denver to philadelphia ', 'show me the afternoon flights from washington to boston ']
+~~~~~gold~~~~~~~~~
+['["SELECT[\'flights\']", "FILTER[\'#1\', \'from denver\']", "FILTER[\'#2\', \'to philadelphia\']", "FILTER[\'#3\', \'if available\']"]', '["SELECT[\'flights\']", "FILTER[\'#1\', \'in the afternoon\']", "FILTER[\'#2\', \'from washington\']", "FILTER[\'#3\', \'to boston\']"]']
+~~~~~guess~~~~~~~~~
+['["SELECT[\'flights\']", "FILTER[\'#1\', \'available tomorrow\']", "FILTER[\'#2\', \'from denver\']", "FILTER[\'#3\', \'to philadelphia\']"]', '["SELECT[\'flights\']", "FILTER[\'#1\', \'from washington\']", "FILTER[\'#2\', \'to boston\']", "FILTER[\'#3\', \'in the afternoon\']"]']
+Validation sanity check:  50%|█████     | 1/2 [00:05<00:05,  5.66s/it]~~~~~source~~~~~~~~~
+['show me the flights from atlanta to baltimore ', 'i want a flight from houston to memphis on tuesday morning ']
+~~~~~gold~~~~~~~~~
+['["SELECT[\'flights\']", "FILTER[\'#1\', \'from atlanta\']", "FILTER[\'#2\', \'to baltimore\']"]', '["SELECT[\'flights\']", "FILTER[\'#1\', \'from houston to memphis\']", "FILTER[\'#2\', \'on tuesday morning\']"]']
+~~~~~guess~~~~~~~~~
+['["SELECT[\'flights\']", "FILTER[\'#1\', \'from atlanta\']", "FILTER[\'#2\', \'to baltimore\']"]', '["SELECT[\'flights\']", "FILTER[\'#1\', \'from houston\']", "FILTER[\'#2\', \'to memphis\']", "FILTER[\'#3\', \'on tuesday morning\']"]']
+Validation sanity check: 100%|██████████| 2/2 [00:07<00:00,  3.65s/it]                                                                      Training: 0it [00:00, ?it/s]Training:   0%|          | 0/14000 [00:00<?, ?it/s]Epoch 0:   0%|          | 0/14000 [00:00<?, ?it/s] Epoch 0:   0%|          | 1/14000 [00:03<13:09:42,  3.38s/it]Epoch 0:   0%|          | 1/14000 [00:03<13:09:50,  3.39s/it, loss=21, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001]Epoch 0:   0%|          | 2/14000 [00:04<7:54:11,  2.03s/it, loss=21, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001] Epoch 0:   0%|          | 2/14000 [00:04<7:54:15,  2.03s/it, loss=25, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=1.000, alpha_lp=1.000, kl=3.79e-8, lp=3.47e-5, cr=21.00]Epoch 0:   0%|          | 3/14000 [00:04<6:04:14,  1.56s/it, loss=25, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=1.000, alpha_lp=1.000, kl=3.79e-8, lp=3.47e-5, cr=21.00]Epoch 0:   0%|          | 3/14000 [00:04<6:04:17,  1.56s/it, loss=21, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=1.000, alpha_lp=1.000, kl=-6.85e-9, lp=3.47e-5, cr=29.00]Epoch 0:   0%|          | 4/14000 [00:05<5:24:13,  1.39s/it, loss=21, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=1.000, alpha_lp=1.000, kl=-6.85e-9, lp=3.47e-5, cr=29.00]Epoch 0:   0%|          | 4/14000 [00:05<5:24:15,  1.39s/it, loss=19.3, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.999, alpha_lp=0.999, kl=1.11e-9, lp=3.47e-5, cr=13.10]Epoch 0:   0%|          | 5/14000 [00:06<4:45:50,  1.23s/it, loss=19.3, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.999, alpha_lp=0.999, kl=1.11e-9, lp=3.47e-5, cr=13.10]Epoch 0:   0%|          | 5/14000 [00:06<4:45:51,  1.23s/it, loss=19.9, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.998, alpha_lp=0.998, kl=2.24e-9, lp=3.48e-5, cr=13.90]Epoch 0:   0%|          | 6/14000 [00:06<4:20:05,  1.12s/it, loss=19.9, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.998, alpha_lp=0.998, kl=2.24e-9, lp=3.48e-5, cr=13.90]Epoch 0:   0%|          | 6/14000 [00:06<4:20:06,  1.12s/it, loss=20.7, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.997, alpha_lp=0.997, kl=-5.16e-9, lp=3.47e-5, cr=22.30]Epoch 0:   0%|          | 7/14000 [00:07<4:01:33,  1.04s/it, loss=20.7, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.997, alpha_lp=0.997, kl=-5.16e-9, lp=3.47e-5, cr=22.30]Epoch 0:   0%|          | 7/14000 [00:07<4:01:34,  1.04s/it, loss=20.8, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.996, alpha_lp=0.996, kl=1.86e-8, lp=3.47e-5, cr=24.90] Epoch 0:   0%|          | 8/14000 [00:07<3:47:32,  1.02it/s, loss=20.8, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.996, alpha_lp=0.996, kl=1.86e-8, lp=3.47e-5, cr=24.90]Epoch 0:   0%|          | 8/14000 [00:07<3:47:33,  1.02it/s, loss=21.2, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.995, alpha_lp=0.995, kl=2.23e-7, lp=3.47e-5, cr=21.30]Epoch 0:   0%|          | 9/14000 [00:08<3:36:24,  1.08it/s, loss=21.2, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.995, alpha_lp=0.995, kl=2.23e-7, lp=3.47e-5, cr=21.30]Epoch 0:   0%|          | 9/14000 [00:08<3:36:24,  1.08it/s, loss=21.9, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.994, alpha_lp=0.994, kl=4.87e-9, lp=3.47e-5, cr=24.20]Epoch 0:   0%|          | 10/14000 [00:08<3:27:59,  1.12it/s, loss=21.9, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.994, alpha_lp=0.994, kl=4.87e-9, lp=3.47e-5, cr=24.20]Epoch 0:   0%|          | 10/14000 [00:08<3:27:59,  1.12it/s, loss=21.6, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.992, alpha_lp=0.992, kl=2e-8, lp=3.47e-5, cr=27.90]   Epoch 0:   0%|          | 11/14000 [00:09<3:24:11,  1.14it/s, loss=21.6, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.992, alpha_lp=0.992, kl=2e-8, lp=3.47e-5, cr=27.90]Epoch 0:   0%|          | 11/14000 [00:09<3:24:12,  1.14it/s, loss=23, v_num=7, valid_acc=0.250, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.991, alpha_lp=0.991, kl=2.9e-8, lp=3.47e-5, cr=18.50]

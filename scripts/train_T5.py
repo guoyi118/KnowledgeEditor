@@ -7,18 +7,18 @@ from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.utilities.seed import seed_everything
 import sys
 sys.path.append('/root/KnowledgeEditor')
-from src.models.bart_seq2seq_kilt import BartSeq2Seq
+from src.models.T5_seq2seq_kilt import T5Seq2Seq
 
 if __name__ == "__main__":
     parser = ArgumentParser()
 
     parser.add_argument(
-        "--dirpath", type=str, default="models/bart_seq2seq_structured_zeroshot"
+        "--dirpath", type=str, default="models/T5_seq2seq"
     )
     parser.add_argument("--save_top_k", type=int, default=10)
     parser.add_argument("--seed", type=int, default=0)
 
-    parser = BartSeq2Seq.add_model_specific_args(parser)
+    parser = T5Seq2Seq.add_model_specific_args(parser)
     parser = Trainer.add_argparse_args(parser)
 
     args, _ = parser.parse_known_args()
@@ -42,6 +42,6 @@ if __name__ == "__main__":
 
     trainer = Trainer.from_argparse_args(args, logger=logger, callbacks=callbacks)
 
-    model = BartSeq2Seq(**vars(args))
+    model = T5Seq2Seq(**vars(args))
 
     trainer.fit(model)

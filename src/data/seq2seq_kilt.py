@@ -14,52 +14,58 @@ class Seq2SeqKILT(Dataset):
         super().__init__()
         self.tokenizer = tokenizer
         self.data = []
+        self.max_length = max_length
+        self.validation = validation
 
         with jsonlines.open(data_path) as f:
             for d in f:
-                if validation:
-                    if templates:
-                        for q in d["meta"]["template_questions"]:
-                            self.data.append(
-                                {
-                                    "input": q,
-                                    "output": [
-                                        o["answer"]
-                                        for o in d["output"]
-                                        if "answer" in o
-                                    ],
-                                }
-                            )
-                    else:
-                        self.data.append(
-                            {
-                                "input": d["input"],
-                                "output": [
-                                    o["answer"] for o in d["output"] if "answer" in o
-                                ],
-                            }
-                        )
-                else:
-                    for o in d["output"]:
-                        if "answer" in o and "provenance" in o:
-                            if templates:
-                                for q in d["meta"]["template_questions"]:
-                                    self.data.append(
-                                        {
-                                            "input": q,
-                                            "output": o["answer"],
-                                        }
-                                    )
-                            else:
-                                self.data.append(
-                                    {
-                                        "input": d["input"],
-                                        "output": o["answer"],
-                                    }
-                                )
+                self.data.append(
+                    {
+                        "input": d["input"],
+                        "output": d["output"],
+                    })
 
-        self.max_length = max_length
-        self.validation = validation
+                # if validation:
+                #     if templates:
+                #         for q in d["meta"]["template_questions"]:
+                #             self.data.append(
+                #                 {
+                #                     "input": q,
+                #                     "output": [
+                #                         o["answer"]
+                #                         for o in d["output"]
+                #                         if "answer" in o
+                #                     ],
+                #                 }
+                #             )
+                #     else:
+                #         self.data.append(
+                #             {
+                #                 "input": d["input"],
+                #                 "output": [
+                #                     o["answer"] for o in d["output"] if "answer" in o
+                #                 ],
+                #             }
+                #         )
+                # else:
+                #     for o in d["output"]:
+                #         if "answer" in o and "provenance" in o:
+                #             if templates:
+                #                 for q in d["meta"]["template_questions"]:
+                #                     self.data.append(
+                #                         {
+                #                             "input": q,
+                #                             "output": o["answer"],
+                #                         }
+                #                     )
+                #             else:
+                #                 self.data.append(
+                #                     {
+                #                         "input": d["input"],
+                #                         "output": o["answer"],
+                #                     }
+                #                 )
+
 
     def __len__(self):
         return len(self.data)

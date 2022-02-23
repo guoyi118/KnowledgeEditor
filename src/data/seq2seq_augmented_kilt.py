@@ -8,7 +8,7 @@ class Seq2SeqAugmentedKILT(Dataset):
         self,
         tokenizer,
         data_path,
-        max_length=32,
+        max_length=256,
         return_view=False,
         all_views=False,
     ):
@@ -18,24 +18,19 @@ class Seq2SeqAugmentedKILT(Dataset):
 
         with jsonlines.open(data_path) as f:
             for d in f:
-                if len(d["alternatives"]) > 0 and len(d["filtered_rephrases"]) > 0:
-                    self.data.append(
-                        {
-                            k: d[k]
-                            for k in (
-                                "input",
-                                # 问题
-                                "prediction",
-                                # 模型输出（错误）
-                                "alternatives",
-                                #模型可能输出的其他答案
-                                "filtered_rephrases",
-                                # 与input有一样prediction的语言相似的问题
-                                "output",
-                                # 正确答案
-                            )
-                        }
-                    )
+                self.data.append(
+                    {
+                        k: d[k]
+                        for k in (
+                            "input",
+                            # 问题
+                            "prediction",
+                            # 模型输出（错误）
+                            "alternatives",
+                            #模型可能输出的其他答案
+                        )
+                    }
+                )
 
         self.max_length = max_length
         self.all_views = all_views
@@ -45,12 +40,13 @@ class Seq2SeqAugmentedKILT(Dataset):
         return len(self.data)
 
     def __getitem__(self, item, seed=None):
-        alt = np.random.RandomState(seed=seed).choice(self.data[item]["alternatives"])
+        # alt = np.random.RandomState(seed=seed).choice(self.data[item]["alternatives"])
+        alt = self.data[item]["alternatives"]
         output = {
             "src": self.data[item]["input"],
             "pred": self.data[item]["prediction"],
             "alt": alt,
-            "answers": [x["answer"] for x in self.data[item]["output"]],
+            # "answers": [x["answer"] for x in self.data[item]["output"]],
             "cond": "{} >> {} || {}".format(
                 self.data[item]["prediction"],
                 alt,
@@ -80,7 +76,7 @@ class Seq2SeqAugmentedKILT(Dataset):
             for k2, v2 in self.tokenizer(
                 v1,
                 return_tensors="pt",
-                padding=True,
+                padding='max_length',
                 max_length=self.max_length,
                 truncation=True,
             ).items()
@@ -108,7 +104,7 @@ class Seq2SeqAugmentedKILT(Dataset):
             for k2, v2 in self.tokenizer(
                 v1,
                 return_tensors="pt",
-                padding=True,
+                padding='max_length',
                 max_length=self.max_length,
                 truncation=True,
             ).items()
