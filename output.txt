@@ -1,0 +1,353 @@
+Global seed set to 0
+GPU available: True, used: True
+TPU available: None, using: 0 TPU cores
+Global seed set to 0
+initializing ddp: GLOBAL_RANK: 0, MEMBER: 1/1
+
+  | Name          | Type                         | Params
+---------------------------------------------------------------
+0 | model         | BartForConditionalGeneration | 139 M 
+1 | learner       | OneShotLearner               | 105 M 
+2 | train_acc     | Accuracy                     | 0     
+3 | valid_acc     | Accuracy                     | 0     
+4 | valid_flipped | Accuracy                     | 0     
+---------------------------------------------------------------
+244 M     Trainable params
+0         Non-trainable params
+244 M     Total params
+978.169   Total estimated model params size (MB)
+/home/sdq/GitHub/guoyi/KnowledgeEditor/ENV/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: Your val_dataloader has `shuffle=True`, it is best practice to turn this off for validation and test dataloaders.
+  warnings.warn(*args, **kwargs)
+Validation sanity check: 0it [00:00, ?it/s]Validation sanity check:   0%|          | 0/2 [00:00<?, ?it/s]Validation sanity check:  50%|█████     | 1/2 [00:02<00:02,  2.99s/it]Validation sanity check: 100%|██████████| 2/2 [00:03<00:00,  1.39s/it]                                                                      /home/sdq/GitHub/guoyi/KnowledgeEditor/ENV/lib/python3.8/site-packages/pytorch_lightning/utilities/distributed.py:50: UserWarning: Your validation_step returned None. Did you forget to return an output?
+  warnings.warn(*args, **kwargs)
+Training: 0it [00:00, ?it/s]Training:   0%|          | 0/123917 [00:00<?, ?it/s]Epoch 0:   0%|          | 0/123917 [00:00<?, ?it/s] ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 1/123917 [00:04<148:06:03,  4.30s/it]Epoch 0:   0%|          | 1/123917 [00:04<148:07:20,  4.30s/it, loss=3.24, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 4])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 3])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 3, 50265])
+Epoch 0:   0%|          | 2/123917 [00:04<82:17:56,  2.39s/it, loss=3.24, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001] Epoch 0:   0%|          | 2/123917 [00:04<82:18:58,  2.39s/it, loss=2.79, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=1.000, alpha_lp=1.000, kl=3.91e-7, lp=3.2e-5, cr=3.240]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 3/123917 [00:05<60:04:52,  1.75s/it, loss=2.79, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=1.000, alpha_lp=1.000, kl=3.91e-7, lp=3.2e-5, cr=3.240]Epoch 0:   0%|          | 3/123917 [00:05<60:06:57,  1.75s/it, loss=2.58, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.999, alpha_lp=0.999, kl=3.43e-7, lp=3.2e-5, cr=2.330]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 4/123917 [00:05<48:51:24,  1.42s/it, loss=2.58, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.999, alpha_lp=0.999, kl=3.43e-7, lp=3.2e-5, cr=2.330]Epoch 0:   0%|          | 4/123917 [00:05<48:52:08,  1.42s/it, loss=2.76, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.998, alpha_lp=0.998, kl=3.15e-7, lp=3.2e-5, cr=2.170]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 5/123917 [00:06<42:06:25,  1.22s/it, loss=2.76, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.998, alpha_lp=0.998, kl=3.15e-7, lp=3.2e-5, cr=2.170]Epoch 0:   0%|          | 5/123917 [00:06<42:07:25,  1.22s/it, loss=2.66, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.997, alpha_lp=0.997, kl=-8.56e-8, lp=3.2e-5, cr=3.320]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 6/123917 [00:06<37:33:10,  1.09s/it, loss=2.66, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.997, alpha_lp=0.997, kl=-8.56e-8, lp=3.2e-5, cr=3.320]Epoch 0:   0%|          | 6/123917 [00:06<37:33:33,  1.09s/it, loss=3.15, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.995, alpha_lp=0.995, kl=9.51e-8, lp=3.2e-5, cr=2.260] ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 7/123917 [00:06<34:18:14,  1.00it/s, loss=3.15, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.995, alpha_lp=0.995, kl=9.51e-8, lp=3.2e-5, cr=2.260]Epoch 0:   0%|          | 7/123917 [00:06<34:18:31,  1.00it/s, loss=3.03, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.993, alpha_lp=0.993, kl=5.91e-7, lp=3.2e-5, cr=5.570]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 3])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 2])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 2, 50265])
+Epoch 0:   0%|          | 8/123917 [00:07<31:48:14,  1.08it/s, loss=3.03, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.993, alpha_lp=0.993, kl=5.91e-7, lp=3.2e-5, cr=5.570]Epoch 0:   0%|          | 8/123917 [00:07<31:48:50,  1.08it/s, loss=3.02, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.990, alpha_lp=0.990, kl=-9.48e-9, lp=3.2e-5, cr=2.340]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 9/123917 [00:07<29:56:35,  1.15it/s, loss=3.02, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.990, alpha_lp=0.990, kl=-9.48e-9, lp=3.2e-5, cr=2.340]Epoch 0:   0%|          | 9/123917 [00:07<29:56:50,  1.15it/s, loss=2.89, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.988, alpha_lp=0.988, kl=1.01e-6, lp=3.2e-5, cr=2.910] ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 9])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 8])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 8, 50265])
+Epoch 0:   0%|          | 10/123917 [00:08<28:24:46,  1.21it/s, loss=2.89, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.988, alpha_lp=0.988, kl=1.01e-6, lp=3.2e-5, cr=2.910]Epoch 0:   0%|          | 10/123917 [00:08<28:25:00,  1.21it/s, loss=3.01, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.985, alpha_lp=0.985, kl=-3.26e-7, lp=3.2e-5, cr=1.930]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 7])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 6])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 6, 50265])
+Epoch 0:   0%|          | 11/123917 [00:08<27:20:18,  1.26it/s, loss=3.01, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.985, alpha_lp=0.985, kl=-3.26e-7, lp=3.2e-5, cr=1.930]Epoch 0:   0%|          | 11/123917 [00:08<27:20:43,  1.26it/s, loss=2.93, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.982, alpha_lp=0.982, kl=2.79e-7, lp=3.2e-5, cr=4.090] ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 12/123917 [00:09<26:25:33,  1.30it/s, loss=2.93, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.982, alpha_lp=0.982, kl=2.79e-7, lp=3.2e-5, cr=4.090]Epoch 0:   0%|          | 12/123917 [00:09<26:25:43,  1.30it/s, loss=2.88, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.978, alpha_lp=0.978, kl=7.99e-7, lp=3.2e-5, cr=2.060]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 3])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 2])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 2, 50265])
+Epoch 0:   0%|          | 13/123917 [00:09<25:47:35,  1.33it/s, loss=2.88, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.978, alpha_lp=0.978, kl=7.99e-7, lp=3.2e-5, cr=2.060]Epoch 0:   0%|          | 13/123917 [00:09<25:47:47,  1.33it/s, loss=3.03, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.975, alpha_lp=0.975, kl=5.05e-7, lp=3.2e-5, cr=2.310]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 4])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 3])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 3, 50265])
+Epoch 0:   0%|          | 14/123917 [00:10<25:11:38,  1.37it/s, loss=3.03, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.975, alpha_lp=0.975, kl=5.05e-7, lp=3.2e-5, cr=2.310]Epoch 0:   0%|          | 14/123917 [00:10<25:12:03,  1.37it/s, loss=3.03, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.971, alpha_lp=0.971, kl=4.04e-7, lp=3.2e-5, cr=4.860]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 15/123917 [00:10<24:31:22,  1.40it/s, loss=3.03, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.971, alpha_lp=0.971, kl=4.04e-7, lp=3.2e-5, cr=4.860]Epoch 0:   0%|          | 15/123917 [00:10<24:31:30,  1.40it/s, loss=3.02, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.967, alpha_lp=0.967, kl=5.13e-7, lp=3.2e-5, cr=3.080]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 16/123917 [00:11<23:57:15,  1.44it/s, loss=3.02, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.967, alpha_lp=0.967, kl=5.13e-7, lp=3.2e-5, cr=3.080]Epoch 0:   0%|          | 16/123917 [00:11<23:57:24,  1.44it/s, loss=2.99, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.963, alpha_lp=0.963, kl=-9.13e-9, lp=3.2e-5, cr=2.830]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 17/123917 [00:11<23:27:16,  1.47it/s, loss=2.99, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.963, alpha_lp=0.963, kl=-9.13e-9, lp=3.2e-5, cr=2.830]Epoch 0:   0%|          | 17/123917 [00:11<23:27:25,  1.47it/s, loss=2.93, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.959, alpha_lp=0.959, kl=2.32e-7, lp=3.2e-5, cr=2.540] ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 4])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 3])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 3, 50265])
+Epoch 0:   0%|          | 18/123917 [00:12<23:01:58,  1.49it/s, loss=2.93, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.959, alpha_lp=0.959, kl=2.32e-7, lp=3.2e-5, cr=2.540]Epoch 0:   0%|          | 18/123917 [00:12<23:02:04,  1.49it/s, loss=2.9, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.955, alpha_lp=0.955, kl=4.31e-8, lp=3.2e-5, cr=2.020] ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 7])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 6])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 6, 50265])
+Epoch 0:   0%|          | 19/123917 [00:12<22:37:29,  1.52it/s, loss=2.9, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.955, alpha_lp=0.955, kl=4.31e-8, lp=3.2e-5, cr=2.020]Epoch 0:   0%|          | 19/123917 [00:12<22:37:37,  1.52it/s, loss=2.91, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.950, alpha_lp=0.950, kl=1.85e-7, lp=3.2e-5, cr=2.320]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 20/123917 [00:12<22:17:36,  1.54it/s, loss=2.91, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.950, alpha_lp=0.950, kl=1.85e-7, lp=3.2e-5, cr=2.320]Epoch 0:   0%|          | 20/123917 [00:12<22:17:45,  1.54it/s, loss=2.9, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.945, alpha_lp=0.945, kl=2.77e-7, lp=3.2e-5, cr=3.060] ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 21/123917 [00:13<22:03:26,  1.56it/s, loss=2.9, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.945, alpha_lp=0.945, kl=2.77e-7, lp=3.2e-5, cr=3.060]Epoch 0:   0%|          | 21/123917 [00:13<22:03:32,  1.56it/s, loss=2.88, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.941, alpha_lp=0.941, kl=-3.55e-7, lp=3.2e-5, cr=2.810]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 7])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 6])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 6, 50265])
+Epoch 0:   0%|          | 22/123917 [00:13<21:42:33,  1.59it/s, loss=2.88, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.941, alpha_lp=0.941, kl=-3.55e-7, lp=3.2e-5, cr=2.810]Epoch 0:   0%|          | 22/123917 [00:13<21:42:39,  1.59it/s, loss=2.9, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.935, alpha_lp=0.935, kl=-5.13e-7, lp=3.2e-5, cr=2.750] ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 23/123917 [00:14<21:33:30,  1.60it/s, loss=2.9, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.935, alpha_lp=0.935, kl=-5.13e-7, lp=3.2e-5, cr=2.750]Epoch 0:   0%|          | 23/123917 [00:14<21:33:37,  1.60it/s, loss=2.95, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.930, alpha_lp=0.930, kl=3.76e-7, lp=3.2e-5, cr=2.860]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 24/123917 [00:14<21:21:19,  1.61it/s, loss=2.95, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.930, alpha_lp=0.930, kl=3.76e-7, lp=3.2e-5, cr=2.860]Epoch 0:   0%|          | 24/123917 [00:14<21:21:25,  1.61it/s, loss=2.93, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.925, alpha_lp=0.925, kl=7e-7, lp=3.2e-5, cr=3.060]   ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 7])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 6])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 6, 50265])
+Epoch 0:   0%|          | 25/123917 [00:15<21:11:19,  1.62it/s, loss=2.93, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.925, alpha_lp=0.925, kl=7e-7, lp=3.2e-5, cr=3.060]Epoch 0:   0%|          | 25/123917 [00:15<21:11:41,  1.62it/s, loss=2.95, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.919, alpha_lp=0.919, kl=2.92e-7, lp=3.2e-5, cr=3.070]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 8])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 7])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 7, 50265])
+Epoch 0:   0%|          | 26/123917 [00:15<20:58:33,  1.64it/s, loss=2.95, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.919, alpha_lp=0.919, kl=2.92e-7, lp=3.2e-5, cr=3.070]Epoch 0:   0%|          | 26/123917 [00:15<20:58:38,  1.64it/s, loss=2.78, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.913, alpha_lp=0.913, kl=4.59e-7, lp=3.2e-5, cr=2.570]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 8])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 7])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 7, 50265])
+Epoch 0:   0%|          | 27/123917 [00:16<20:44:43,  1.66it/s, loss=2.78, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.913, alpha_lp=0.913, kl=4.59e-7, lp=3.2e-5, cr=2.570]Epoch 0:   0%|          | 27/123917 [00:16<20:44:54,  1.66it/s, loss=2.76, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.907, alpha_lp=0.907, kl=8.91e-8, lp=3.2e-5, cr=2.070]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 28/123917 [00:16<20:32:18,  1.68it/s, loss=2.76, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.907, alpha_lp=0.907, kl=8.91e-8, lp=3.2e-5, cr=2.070]Epoch 0:   0%|          | 28/123917 [00:16<20:32:23,  1.68it/s, loss=2.8, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.901, alpha_lp=0.901, kl=3.58e-7, lp=3.2e-5, cr=2.130] ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 8])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 7])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 7, 50265])
+Epoch 0:   0%|          | 29/123917 [00:17<20:20:53,  1.69it/s, loss=2.8, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.901, alpha_lp=0.901, kl=3.58e-7, lp=3.2e-5, cr=2.130]Epoch 0:   0%|          | 29/123917 [00:17<20:20:58,  1.69it/s, loss=2.86, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.895, alpha_lp=0.895, kl=8.11e-7, lp=3.2e-5, cr=3.530]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 7])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 6])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 6, 50265])
+Epoch 0:   0%|          | 30/123917 [00:17<20:11:53,  1.70it/s, loss=2.86, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.895, alpha_lp=0.895, kl=8.11e-7, lp=3.2e-5, cr=3.530]Epoch 0:   0%|          | 30/123917 [00:17<20:11:57,  1.70it/s, loss=2.79, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.889, alpha_lp=0.889, kl=2.63e-7, lp=3.21e-5, cr=3.180]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 7])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 6])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 6, 50265])
+Epoch 0:   0%|          | 31/123917 [00:18<20:01:44,  1.72it/s, loss=2.79, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.889, alpha_lp=0.889, kl=2.63e-7, lp=3.21e-5, cr=3.180]Epoch 0:   0%|          | 31/123917 [00:18<20:01:47,  1.72it/s, loss=2.82, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.882, alpha_lp=0.882, kl=3.77e-7, lp=3.21e-5, cr=2.750]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 8])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 7])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 7, 50265])
+Epoch 0:   0%|          | 32/123917 [00:18<19:52:19,  1.73it/s, loss=2.82, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.882, alpha_lp=0.882, kl=3.77e-7, lp=3.21e-5, cr=2.750]Epoch 0:   0%|          | 32/123917 [00:18<19:52:22,  1.73it/s, loss=2.83, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.875, alpha_lp=0.875, kl=-6.35e-9, lp=3.21e-5, cr=2.570]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 33/123917 [00:18<19:42:14,  1.75it/s, loss=2.83, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.875, alpha_lp=0.875, kl=-6.35e-9, lp=3.21e-5, cr=2.570]Epoch 0:   0%|          | 33/123917 [00:18<19:42:18,  1.75it/s, loss=2.74, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.868, alpha_lp=0.868, kl=4.45e-7, lp=3.21e-5, cr=2.540] ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 8])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 7])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 7, 50265])
+Epoch 0:   0%|          | 34/123917 [00:19<19:33:08,  1.76it/s, loss=2.74, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.868, alpha_lp=0.868, kl=4.45e-7, lp=3.21e-5, cr=2.540]Epoch 0:   0%|          | 34/123917 [00:19<19:33:17,  1.76it/s, loss=2.71, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.861, alpha_lp=0.861, kl=8.78e-7, lp=3.21e-5, cr=3.030]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 35/123917 [00:19<19:25:06,  1.77it/s, loss=2.71, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.861, alpha_lp=0.861, kl=8.78e-7, lp=3.21e-5, cr=3.030]Epoch 0:   0%|          | 35/123917 [00:19<19:25:09,  1.77it/s, loss=2.68, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.854, alpha_lp=0.854, kl=2.89e-7, lp=3.21e-5, cr=2.510]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 36/123917 [00:20<19:17:11,  1.78it/s, loss=2.68, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.854, alpha_lp=0.854, kl=2.89e-7, lp=3.21e-5, cr=2.510]Epoch 0:   0%|          | 36/123917 [00:20<19:17:14,  1.78it/s, loss=2.75, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.846, alpha_lp=0.846, kl=2.24e-8, lp=3.21e-5, cr=2.230]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 37/123917 [00:20<19:09:39,  1.80it/s, loss=2.75, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.846, alpha_lp=0.846, kl=2.24e-8, lp=3.21e-5, cr=2.230]Epoch 0:   0%|          | 37/123917 [00:20<19:09:42,  1.80it/s, loss=2.78, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.839, alpha_lp=0.839, kl=6.01e-7, lp=3.22e-5, cr=4.040]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 4])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 3])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 3, 50265])
+Epoch 0:   0%|          | 38/123917 [00:21<19:03:04,  1.81it/s, loss=2.78, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.839, alpha_lp=0.839, kl=6.01e-7, lp=3.22e-5, cr=4.040]Epoch 0:   0%|          | 38/123917 [00:21<19:03:06,  1.81it/s, loss=2.86, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.831, alpha_lp=0.831, kl=5.99e-7, lp=3.21e-5, cr=2.550]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 39/123917 [00:21<18:56:54,  1.82it/s, loss=2.86, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.831, alpha_lp=0.831, kl=5.99e-7, lp=3.21e-5, cr=2.550]Epoch 0:   0%|          | 39/123917 [00:21<18:57:02,  1.82it/s, loss=2.85, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.823, alpha_lp=0.823, kl=2.96e-9, lp=3.21e-5, cr=3.860]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 8])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 7])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 7, 50265])
+Epoch 0:   0%|          | 40/123917 [00:21<18:50:13,  1.83it/s, loss=2.85, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.823, alpha_lp=0.823, kl=2.96e-9, lp=3.21e-5, cr=3.860]Epoch 0:   0%|          | 40/123917 [00:21<18:50:21,  1.83it/s, loss=2.82, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.815, alpha_lp=0.815, kl=2.41e-7, lp=3.22e-5, cr=2.870]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 4])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 3])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 3, 50265])
+Epoch 0:   0%|          | 41/123917 [00:22<18:44:19,  1.84it/s, loss=2.82, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.815, alpha_lp=0.815, kl=2.41e-7, lp=3.22e-5, cr=2.870]Epoch 0:   0%|          | 41/123917 [00:22<18:44:23,  1.84it/s, loss=2.91, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.807, alpha_lp=0.807, kl=6.94e-7, lp=3.22e-5, cr=2.190]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 42/123917 [00:22<18:38:24,  1.85it/s, loss=2.91, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.807, alpha_lp=0.807, kl=6.94e-7, lp=3.22e-5, cr=2.190]Epoch 0:   0%|          | 42/123917 [00:22<18:38:28,  1.85it/s, loss=2.88, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.798, alpha_lp=0.798, kl=6.99e-7, lp=3.22e-5, cr=4.620]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 7])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 6])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 6, 50265])
+Epoch 0:   0%|          | 43/123917 [00:23<18:34:28,  1.85it/s, loss=2.88, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.798, alpha_lp=0.798, kl=6.99e-7, lp=3.22e-5, cr=4.620]Epoch 0:   0%|          | 43/123917 [00:23<18:34:35,  1.85it/s, loss=2.82, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.790, alpha_lp=0.790, kl=3.61e-7, lp=3.22e-5, cr=2.160]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 7])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 6])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 6, 50265])
+Epoch 0:   0%|          | 44/123917 [00:23<18:29:41,  1.86it/s, loss=2.82, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.790, alpha_lp=0.790, kl=3.61e-7, lp=3.22e-5, cr=2.160]Epoch 0:   0%|          | 44/123917 [00:23<18:29:48,  1.86it/s, loss=2.81, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.781, alpha_lp=0.781, kl=4.07e-7, lp=3.23e-5, cr=2.040]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 45/123917 [00:24<18:24:50,  1.87it/s, loss=2.81, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.781, alpha_lp=0.781, kl=4.07e-7, lp=3.23e-5, cr=2.040]Epoch 0:   0%|          | 45/123917 [00:24<18:24:53,  1.87it/s, loss=2.77, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.772, alpha_lp=0.772, kl=-2.76e-7, lp=3.23e-5, cr=2.750]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 46/123917 [00:24<18:21:04,  1.88it/s, loss=2.77, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.772, alpha_lp=0.772, kl=-2.76e-7, lp=3.23e-5, cr=2.750]Epoch 0:   0%|          | 46/123917 [00:24<18:21:10,  1.87it/s, loss=2.8, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.763, alpha_lp=0.763, kl=1.06e-7, lp=3.23e-5, cr=1.880]  ~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 47/123917 [00:25<18:21:27,  1.87it/s, loss=2.8, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.763, alpha_lp=0.763, kl=1.06e-7, lp=3.23e-5, cr=1.880]Epoch 0:   0%|          | 47/123917 [00:25<18:21:30,  1.87it/s, loss=2.89, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.753, alpha_lp=0.753, kl=5.35e-7, lp=3.23e-5, cr=2.600]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 4])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 3])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 3, 50265])
+Epoch 0:   0%|          | 48/123917 [00:25<18:19:40,  1.88it/s, loss=2.89, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.753, alpha_lp=0.753, kl=5.35e-7, lp=3.23e-5, cr=2.600]Epoch 0:   0%|          | 48/123917 [00:25<18:19:47,  1.88it/s, loss=2.82, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.744, alpha_lp=0.744, kl=1.06e-6, lp=3.24e-5, cr=3.860]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 49/123917 [00:26<18:15:27,  1.88it/s, loss=2.82, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.744, alpha_lp=0.744, kl=1.06e-6, lp=3.24e-5, cr=3.860]Epoch 0:   0%|          | 49/123917 [00:26<18:15:29,  1.88it/s, loss=2.76, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.734, alpha_lp=0.734, kl=1.19e-6, lp=3.24e-5, cr=2.090]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 50/123917 [00:26<18:11:19,  1.89it/s, loss=2.76, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.734, alpha_lp=0.734, kl=1.19e-6, lp=3.24e-5, cr=2.090]Epoch 0:   0%|          | 50/123917 [00:26<18:11:22,  1.89it/s, loss=2.75, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.724, alpha_lp=0.724, kl=1.66e-6, lp=3.24e-5, cr=2.160]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 51/123917 [00:26<18:07:33,  1.90it/s, loss=2.75, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.724, alpha_lp=0.724, kl=1.66e-6, lp=3.24e-5, cr=2.160]Epoch 0:   0%|          | 51/123917 [00:26<18:07:36,  1.90it/s, loss=2.72, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.714, alpha_lp=0.714, kl=1.19e-6, lp=3.25e-5, cr=2.440]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 8])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 7])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 7, 50265])
+Epoch 0:   0%|          | 52/123917 [00:27<18:04:07,  1.90it/s, loss=2.72, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.714, alpha_lp=0.714, kl=1.19e-6, lp=3.25e-5, cr=2.440]Epoch 0:   0%|          | 52/123917 [00:27<18:04:09,  1.90it/s, loss=2.68, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.704, alpha_lp=0.704, kl=1.87e-6, lp=3.25e-5, cr=1.990]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 53/123917 [00:27<18:01:06,  1.91it/s, loss=2.68, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.704, alpha_lp=0.704, kl=1.87e-6, lp=3.25e-5, cr=1.990]Epoch 0:   0%|          | 53/123917 [00:27<18:01:08,  1.91it/s, loss=2.67, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.694, alpha_lp=0.694, kl=-2.3e-8, lp=3.25e-5, cr=1.770]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 5])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 4])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 4, 50265])
+Epoch 0:   0%|          | 54/123917 [00:28<17:56:42,  1.92it/s, loss=2.67, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.694, alpha_lp=0.694, kl=-2.3e-8, lp=3.25e-5, cr=1.770]Epoch 0:   0%|          | 54/123917 [00:28<17:56:45,  1.92it/s, loss=2.69, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.683, alpha_lp=0.683, kl=5.19e-6, lp=3.26e-5, cr=2.730]~~~~~~batch["trg_input_ids"].shape~~~~~~~~~
+torch.Size([3, 6])
+~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~
+torch.Size([3, 5])
+~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~
+torch.Size([2, 5, 50265])
+Epoch 0:   0%|          | 55/123917 [00:28<17:53:07,  1.92it/s, loss=2.69, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.683, alpha_lp=0.683, kl=5.19e-6, lp=3.26e-5, cr=2.730]Epoch 0:   0%|          | 55/123917 [00:28<17:53:09,  1.92it/s, loss=2.68, v_num=2, valid_acc=0.333, valid_flipped=0.000, margin_kl=0.001, margin_lp=0.001, alpha_kl=0.673, alpha_lp=0.672, kl=7.94e-7, lp=3.26e-5, cr=2.920]

@@ -24,7 +24,6 @@ if __name__ == "__main__":
     parser = Trainer.add_argparse_args(parser)
 
     args, _ = parser.parse_known_args()
-    pprint(args.__dict__)
 
     seed_everything(seed=args.seed)
 
@@ -42,7 +41,6 @@ if __name__ == "__main__":
             logging_interval="step",
         ),
     ]
-
     trainer = Trainer.from_argparse_args(args, logger=logger, callbacks=callbacks)
 
     model = BartSeq2SeqAugmented(**vars(args))

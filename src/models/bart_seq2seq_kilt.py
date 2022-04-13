@@ -84,6 +84,7 @@ class BartSeq2Seq(LightningModule):
         )
 
     def forward(self, batch):
+        
         return self.model(
             input_ids=batch["src_input_ids"],
             attention_mask=batch["src_attention_mask"],

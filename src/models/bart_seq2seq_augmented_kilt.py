@@ -13,6 +13,7 @@ from transformers import (
     get_constant_schedule,
     get_linear_schedule_with_warmup,
 )
+import random
 
 from src.data.seq2seq_augmented_kilt import Seq2SeqAugmentedKILT
 from src.models.bart_seq2seq_kilt import BartSeq2Seq
@@ -22,17 +23,18 @@ from src.utils import batch_it, label_smoothed_nll_loss
 
 class BartSeq2SeqAugmented(LightningModule):
     @staticmethod
+    #  下面是所有的hyperparameter
     def add_model_specific_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
         parser.add_argument(
             "--train_data_path",
             type=str,
-            default="../datasets/structured_zeroshot-train-new_annotated_final.jsonl",
+            default="src/datasets/structured_zeroshot-train-new_annotated_final.jsonl",
         )
         parser.add_argument(
             "--dev_data_path",
             type=str,
-            default="../kilt/datasets/structured_zeroshot-dev-new_annotated_final.jsonl",
+            default="src/datasets/structured_zeroshot-dev-new_annotated_final.jsonl",
         )
         parser.add_argument("--batch_size", type=int, default=64)
         parser.add_argument("--lr", type=float, default=3e-4)
@@ -48,7 +50,7 @@ class BartSeq2SeqAugmented(LightningModule):
         parser.add_argument(
             "--model_checkpoint",
             type=str,
-            default="models/QA_model.ckpt",
+            default="src/models/QA_model.ckpt",
         )
 
         parser.add_argument("--margin_kl_max", type=float, default=1e-3)
@@ -67,18 +69,35 @@ class BartSeq2SeqAugmented(LightningModule):
     def __init__(self, *args, **kwargs):
         super().__init__()
         self.save_hyperparameters()
+        # tokenizer可以替换成我们的
+        # self.tokenizer = AutoTokenizer.from_pretrained('Salesforce/grappa_large_jnt')
+
+        # model 参考 text2qdmr 里 infer的写法 
+        # self.model = registry.construct('model', self.config['model'], preproc=self.model_preproc, device=self.device)
+        # self.model.to(self.device)
+        # self.model.eval()
+        # saver = saver_mod.Saver({"model": model})
+        # last_step = saver.restore(logdir, step=step, map_location=self.device, item_keys=["model"])
+
+
         self.tokenizer = BartTokenizer.from_pretrained(self.hparams.model_name)
+        # self model 也可以替换
         self.model = BartSeq2Seq.load_from_checkpoint(
             self.hparams.model_checkpoint
         ).model.eval()
-
+        # model.eval()可以
         self.learner = OneShotLearner(
             self.model,
+            #dimension可以写上去 我们的是50265 或者，我们的是
+            # self.model.encoder.embeddings.word_embeddings.weight.data.shape[0]
+
             vocab_dim=self.model.model.shared.weight.data.shape[0],
+            # embedding_dim 可能是1024
             embedding_dim=self.model.model.shared.weight.data.shape[1],
             hidden_dim=128,
             condition_dim=1024,
             #include_set可能是控制有哪些层可以调整
+            
             include_set={
                 n
                 for n, _ in self.model.named_parameters()
@@ -99,6 +118,9 @@ class BartSeq2SeqAugmented(LightningModule):
             max_scale=self.hparams.max_scale,
             embedding_init=self.model.model.shared.weight.data,
         )
+        # 我们的text2sql: embedding_init
+        # model.encoder.embeddings.word_embeddings.weight.data
+
 
         self.alpha_kl = torch.nn.Parameter(torch.ones(()))
         self.alpha_kl.register_hook(lambda grad: -grad)
@@ -138,6 +160,7 @@ class BartSeq2SeqAugmented(LightningModule):
                 max_length=self.hparams.max_length,
                 return_view=self.hparams.use_views,
             )
+            
         return DataLoader(
             self.val_dataset,
             batch_size=self.hparams.batch_size,
@@ -147,8 +170,16 @@ class BartSeq2SeqAugmented(LightningModule):
         )
 
     def get_logits_orig_params_dict(self, batch):
-
         with torch.enable_grad():
+            # 3 is batchsize,
+            # ~~~src_input_ids~~~~ torch.Size([3, 16])
+            # ~~~src_attention_mask~~~ torch.Size([3, 16])
+            # ~~~trg_input_ids~~~~ torch.Size([3, 4])
+            # ~~~trg_attention_mask~~~ torch.Size([3, 4])
+            # ~~~~logits~~~ torch.Size([3, 4, 50265])
+            # ~~~~~~~~logits_orig~~~~~~~ torch.Size([1, 4, 50265])
+            # ~~~~~~~~~logit_for_grad~~~ torch.Size([1, 4, 50265])
+            
             logits_orig, logit_for_grad, _ = self.model.eval()(
                 input_ids=batch["src_input_ids"],
                 attention_mask=batch["src_attention_mask"],
@@ -163,8 +194,12 @@ class BartSeq2SeqAugmented(LightningModule):
                 ]
             )
 
-            logits_orig = logits_orig.detach()
 
+
+            logits_orig = logits_orig.detach()
+            # detach() 得到的tensor永远不需要计算其梯度，不具有grad。
+            
+            # 现在问题就是batch
             grads = torch.autograd.grad(
                 label_smoothed_nll_loss(
                     logit_for_grad.log_softmax(-1),
@@ -204,8 +239,8 @@ class BartSeq2SeqAugmented(LightningModule):
         return logits_orig, params_dict
 
     def forward(self, batch):
+        logits_orig, params_dict = self.get_logits_orig_params_dict(batch)                       
 
-        logits_orig, params_dict = self.get_logits_orig_params_dict(batch)
         fmodel = make_functional(self.model).eval()
 
         logits = fmodel(
@@ -230,12 +265,17 @@ class BartSeq2SeqAugmented(LightningModule):
                 logits=logits[: -2 if self.hparams.use_views else -1]
             ),
         )
+
         # lp应该是 lp norm 
         lp = sum(
             (p.abs() ** self.hparams.p).mean() ** (1 / self.hparams.p)
             for p in params_dict.values()
         ) / len(params_dict)
         # cr 不知道是什么
+        
+        print('~~~~~logits[-2 if self.hparams.use_views else -1 :]~~~~~~~')
+        print(logits[-2 if self.hparams.use_views else -1 :].shape)
+
         cr, _ = label_smoothed_nll_loss(
             logits[-2 if self.hparams.use_views else -1 :].log_softmax(-1),
             labels[-2 if self.hparams.use_views else -1 :],
@@ -246,8 +286,13 @@ class BartSeq2SeqAugmented(LightningModule):
         return kl, lp, cr
 
     def training_step(self, batch, batch_idx):
-
         logits_orig, logits, params_dict = self.forward(batch)
+
+        print('~~~~~~batch["trg_input_ids"].shape~~~~~~~~~')
+        print(batch["trg_input_ids"].shape)
+
+        print('~~~~~~~~batch["trg_input_ids"][:, 1:]~~~~~~~~~~~~~~~')
+        print(batch["trg_input_ids"][:, 1:].shape)
 
         kl, lp, cr = self.get_kl_lp_cr(
             logits_orig, logits, batch["trg_input_ids"][:, 1:], params_dict
@@ -265,7 +310,7 @@ class BartSeq2SeqAugmented(LightningModule):
             / batch["trg_attention_mask"][
                 (-2 if self.hparams.use_views else -1) :, 1:
             ].sum()
-        )
+        )   
 
         loss_kl = self.alpha_kl * (kl - self.margin_kl)
         loss_lp = self.alpha_lp * (lp - self.margin_lp)

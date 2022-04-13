@@ -25,26 +25,26 @@ class BertBinaryAugmented(LightningModule):
         parser.add_argument(
             "--train_data_path",
             type=str,
-            default="../datasets/fever-train-kilt.jsonl",
+            default="src/datasets/fever-train-kilt.jsonl",
         )
         parser.add_argument(
             "--dev_data_path",
             type=str,
-            default="../datasets/fever-dev-kilt.jsonl",
+            default="src/datasets/fever-dev-kilt.jsonl",
         )
-        parser.add_argument("--batch_size", type=int, default=4)
+        parser.add_argument("--batch_size", type=int, default=64)
         parser.add_argument("--lr", type=float, default=3e-4)
         parser.add_argument("--lr_alpha", type=float, default=1e-1)
         parser.add_argument("--max_length", type=int, default=32)
         parser.add_argument("--total_num_updates", type=int, default=200000)
         parser.add_argument("--warmup_updates", type=int, default=1000)
-        parser.add_argument("--num_workers", type=int, default=0)
+        parser.add_argument("--num_workers", type=int, default=32)
 
         parser.add_argument("--model_name", type=str, default="bert-base-uncased")
         parser.add_argument(
             "--model_checkpoint",
             type=str,
-            default="models/FC_model.ckpt",
+            default="src/models/FC_model.ckpt",
         )
 
         parser.add_argument("--margin_kl_max", type=float, default=1e-1)
@@ -54,9 +54,13 @@ class BertBinaryAugmented(LightningModule):
         parser.add_argument("--max_scale", type=float, default=1)
         parser.add_argument("--p", type=float, default=2)
         parser.add_argument(
-            "--divergences", type=str, choices=["kl", "lp", "both"], default="kl"
+            "--divergences", type=str, choices=["kl", "lp", "both"], default="both"
         )
         parser.add_argument("--use_views", action="store_true")
+        # parser.add_argument("--gpus", type=int, default=1)
+        # parser.add_argument("--accelerator", type=str, default="ddp")
+        # parser.add_argument("--max_steps", type=int, default=5000)
+        
 
         return parser
 
@@ -157,6 +161,8 @@ class BertBinaryAugmented(LightningModule):
                 ]
             )
 
+
+
             grads = torch.autograd.grad(
                 torch.nn.functional.binary_cross_entropy_with_logits(
                     logit_for_grad,
@@ -185,7 +191,6 @@ class BertBinaryAugmented(LightningModule):
         return logits_orig.detach(), params_dict
 
     def forward(self, batch, logits_orig=None, params_dict=None):
-
         if not params_dict:
             logits_orig, params_dict = self.get_logits_orig_params_dict(batch)
 
@@ -251,7 +256,7 @@ class BertBinaryAugmented(LightningModule):
         return {"loss": loss}
 
     def validation_step(self, batch, batch_idx=None):
-
+        print('~~~validation_step~~~~~~~~~~~')
         logits_orig, logits, params_dict = self.forward(batch)
 
         self.valid_acc(logits.sigmoid(), batch["labels"].long())

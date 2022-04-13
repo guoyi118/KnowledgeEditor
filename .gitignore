@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+FC_model.ckpt
+QA_model.ckpt
+QA_model_KE.ckpt
+datasets/
+datasets.zip

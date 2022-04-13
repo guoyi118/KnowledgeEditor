@@ -24,7 +24,6 @@ if __name__ == "__main__":
 
     parser = BertBinaryAugmented.add_model_specific_args(parser)
     parser = Trainer.add_argparse_args(parser)
-
     args, _ = parser.parse_known_args()
 
     seed_everything(seed=args.seed)
